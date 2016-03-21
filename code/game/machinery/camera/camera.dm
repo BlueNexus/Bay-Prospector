@@ -8,7 +8,7 @@
 	active_power_usage = 10
 	layer = 5
 
-	var/list/network = list("Exodus")
+	var/list/network = list("Prospector")
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/status = 1
@@ -142,7 +142,7 @@
 				assembly.loc = src.loc
 				assembly.anchored = 1
 				assembly.camera_name = c_tag
-				assembly.camera_network = english_list(network, "Exodus", ",", ",")
+				assembly.camera_network = english_list(network, "Prospector", ",", ",")
 				assembly.update_icon()
 				assembly.dir = src.dir
 				if(stat & BROKEN)
