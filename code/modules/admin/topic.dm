@@ -1214,8 +1214,8 @@
 
 	else if(href_list["busy"])
 		var/mob/M = locate(href_list["busy"])
-		var/take_msg = "\blue <b><font color=green><a href='?src=\ref[usr];priv_msg=\ref[M]'>[key_name(M)]</a> has been told we are too busy to answer by <a href='?src=\ref[usr];priv_msg=\ref[src.owner]'>[key_name(src.owner)]</a></font></b>"
-		var/recieve_msg = "\red <b>Your request has been acknowledged, but due to more requests coming in, we may be unable to provide a response to you, as we might be working on different ahelps at the same time.</b>"
+		var/take_msg = "\blue <b><font color=green><a href='?src=\ref[usr];priv_msg=\ref[M]'>[key_name(M)]</a> has been told we are too busy or too uncaring to answer by <a href='?src=\ref[usr];priv_msg=\ref[src.owner]'>[key_name(src.owner)]</a></font></b>"
+		var/recieve_msg = "\red <b>Your question / concern has been noticed by staff, but we have opted not to reply at this time. So either your adminhelp is being handled, or you made a silly request.</b>"
 		M << recieve_msg
 		for(var/client/X in admins)
 			X << take_msg
