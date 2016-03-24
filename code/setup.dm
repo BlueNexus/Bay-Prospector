@@ -940,7 +940,7 @@ var/list/be_special_flags = list(
 #define NETWORK_ENGINEERING "Engineering"
 #define NETWORK_ENGINEERING_OUTPOST "Engineering Outpost"
 #define NETWORK_ERT "ERT"
-#define NETWORK_EXODUS "Exodus"
+#define NETWORK_PROSPECTOR "Prospector"
 #define NETWORK_MEDICAL "Medical"
 #define NETWORK_MINE "MINE"
 #define NETWORK_RESEARCH "Research"

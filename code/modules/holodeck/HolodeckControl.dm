@@ -349,10 +349,10 @@
 	active = 0
 	use_power = 1
 
-/obj/machinery/computer/HolodeckControl/Exodus
+/obj/machinery/computer/HolodeckControl/Prospector
 	linkedholodeck_area = /area/holodeck/alphadeck
 
-/obj/machinery/computer/HolodeckControl/Exodus/New()
+/obj/machinery/computer/HolodeckControl/Prospector/New()
 	..()
 	supported_programs = list(
 	"Empty Court" 		= "emptycourt",

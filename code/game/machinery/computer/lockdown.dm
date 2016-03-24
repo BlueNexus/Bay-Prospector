@@ -31,9 +31,9 @@
 				connected_doors.Add("Locker Room Shutters")
 				connected_doors.Add("Breakroom Shutters")
 				connected_doors.Add("Observation Shutters")
-				//exodus engineering
+				//prospector engineering
 			if("Medbay")
-				//Exodus Medbay
+				//Prospector Medbay
 				connected_doors.Add("Genetics Outer Shutters")
 				connected_doors.Add("Genetics Inner Shutters")
 				connected_doors.Add("Chemistry Outer Shutters")
