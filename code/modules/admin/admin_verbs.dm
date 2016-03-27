@@ -15,6 +15,7 @@ var/list/admin_verbs_default = list(
 var/list/admin_verbs_admin = list(
 	/client/proc/roll_dices,
 	/client/proc/player_panel_new,		/*shows an interface for all players, with links to various panels*/
+	/client/proc/display_admin_reports,
 	/client/proc/invisimin,				/*allows our mob to go invisible/visible*/
 //	/datum/admins/proc/show_traitor_panel,	/*interface which shows a mob's mind*/ -Removed due to rare practical use. Moved to debug verbs ~Errorage
 	/datum/admins/proc/show_game_mode,  /*Configuration window for the current game mode.*/
@@ -292,6 +293,7 @@ var/list/admin_verbs_mod = list(
 	/datum/admins/proc/show_player_panel,
 	/client/proc/check_antagonists,
 	/client/proc/jobbans,
+	/client/proc/display_admin_reports,
 	/client/proc/freeze,
 	/client/proc/freezemecha,
 	/client/proc/cmd_admin_subtle_message,	/*send an message to somebody as a 'voice in their head'*/\

@@ -118,10 +118,8 @@ client/proc/display_admin_reports()
 	usr << browse(output, "window=news;size=600x400")
 
 
-client/proc/Report(mob/M as mob in world)
+client/verb/Report(mob/M as mob in world)
 	set category = "Admin"
-	if(!src.holder)
-		return
 
 	var/CID = "Unknown"
 	if(M.client)
@@ -137,7 +135,7 @@ client/proc/Report(mob/M as mob in world)
 		display_admin_reports()
 
 client/proc/mark_report_done(ID as num)
-	if(!src.holder || src.holder.level < 0)
+	if(!src.holder || (!check_rights(R_ADMIN,0)))
 		return
 
 	var/savefile/Reports = new("data/reports.sav")
@@ -157,7 +155,7 @@ client/proc/mark_report_done(ID as num)
 
 
 client/proc/edit_report(ID as num)
-	if(!src.holder || src.holder.level < 0)
+	if(!src.holder || (!check_rights(R_ADMIN,0)))
 		src << "<b>You tried to modify the news, but you're not an admin!"
 		return
 

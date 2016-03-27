@@ -334,7 +334,7 @@
 
 
 		return 1
-/*
+
 /datum/job/secretary
 	title = "General Secretary"
 	flag = SECRETARY
@@ -367,4 +367,3 @@
 		H.equip_to_slot_or_del(new /obj/item/device/pda/heads/hop(H), slot_belt)
 		H.equip_to_slot_or_del(new /obj/item/clothing/shoes/laceup(H), slot_shoes)
 		return 1
-*/
