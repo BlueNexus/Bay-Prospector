@@ -118,7 +118,7 @@
 		new /obj/item/weapon/storage/box/flashbangs(src)
 		new /obj/item/weapon/storage/belt/security(src)
 		new /obj/item/device/flash(src)
-		new /obj/item/clothing/mask/sechailer/hos
+		new /obj/item/clothing/mask/sechailer/hos(src)
 //		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/melee/baton/stungun/loaded(src)
 		new /obj/item/weapon/gun/energy/gun(src)
@@ -161,7 +161,7 @@
 //		new /obj/item/weapon/melee/baton/loaded(src)
 		new /obj/item/weapon/melee/baton/stungun/loaded(src)
 		new /obj/item/weapon/gun/energy/gun(src)
-		new /obj/item/clothing/mask/sechailer/warden
+		new /obj/item/clothing/mask/sechailer/warden(src)
 		new /obj/item/weapon/storage/box/holobadge(src)
 		new /obj/item/clothing/head/beret/sec/warden(src)
 		return
