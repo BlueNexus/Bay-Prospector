@@ -294,6 +294,6 @@
  	heavy society with a tech level resembling that of early 2000s earth with advances in electricity. \
  	They are still acclimating to human society, and their native language is Aviachirp, a language made mostly of high pitched chirps."
 	flags = CAN_JOIN | IS_WHITELISTED | HAS_UNDERWEAR | HAS_LIPS | HAS_SKIN_COLOR
-	unarmed_types = list(/datum/unarmed_attack/claws, /datum/unarmed_attack/bite/strong)
+	unarmed_types = list(/datum/unarmed_attack/stomp, /datum/unarmed_attack/kick, /datum/unarmed_attack/claws, /datum/unarmed_attack/bite/sharp)
 	darksight = 10
 	brute_mod = 1.3
