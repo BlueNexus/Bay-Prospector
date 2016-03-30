@@ -63,13 +63,11 @@
 	name = "energy axe"
 	desc = "An energised battle axe."
 	icon_state = "axe0"
-	//active_force = 150 //holy...
-	active_force = 60
+	active_force = 45
 	active_throwforce = 35
 	active_w_class = 5
-	//force = 40
-	//throwforce = 25
-	force = 20
+	force = 15
+	armor_penetration = 10
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
@@ -102,10 +100,11 @@
 	name = "energy sword"
 	desc = "May the force be within you."
 	icon_state = "sword0"
-	active_force = 30
+	active_force = 20
 	active_throwforce = 20
 	active_w_class = 4
 	force = 3
+	armor_penetration = 10
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
@@ -150,8 +149,26 @@
 	attack_verb = list()
 	icon_state = initial(icon_state)
 
-/obj/item/weapon/melee/energy/sword/IsShield()
-	if(active)
+/obj/item/weapon/melee/energy/sword/handle_shield(mob/user, var/damage, atom/damage_source = null, mob/attacker = null, var/attack_text = "the attack")
+	if(!active)
+		return 0
+
+	//parry only melee attacks
+	if(istype(damage_source, /obj/item/projectile) || (attacker && get_dist(user, attacker) > 1))
+		return 0
+
+	//block as long as they are not directly behind us
+	var/bad_arc = reverse_direction(user.dir) //arc of directions from which we cannot block
+	if(!check_shield_arc(user, bad_arc, damage_source, attacker))
+		return 0
+
+	if(prob(50))
+		user.visible_message("<span class='danger'>\The [user] parries [attack_text] with \the [src]!</span>")
+
+		var/datum/effect/effect/system/spark_spread/spark_system = new /datum/effect/effect/system/spark_spread()
+		spark_system.set_up(5, 0, user.loc)
+		spark_system.start()
+		playsound(user.loc, 'sound/weapons/blade1.ogg', 50, 1)
 		return 1
 	return 0
 
@@ -173,7 +190,8 @@
 	name = "energy blade"
 	desc = "A concentrated beam of energy in the shape of a blade. Very stylish... and lethal."
 	icon_state = "blade"
-	force = 70.0//Normal attacks deal very high damage.
+	force = 30.0//Normal attacks deal very high damage.
+	armor_penetration = 25
 	sharp = 1
 	edge = 1
 	anchored = 1    // Never spawned outside of inventory, should be fine.

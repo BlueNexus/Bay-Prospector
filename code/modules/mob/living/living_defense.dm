@@ -2,34 +2,45 @@
 /*
 	run_armor_check(a,b)
 	args
-	a:def_zone - What part is getting hit, if null will check entire body
-	b:attack_flag - What type of attack, bullet, laser, energy, melee
-
+	a:def_zone		- What part is getting hit, if null will check entire body
+	b:attack_flag	- What type of attack, bullet, laser, energy, melee
+	c:armour_pen	- How much armor to ignore.
+	d:absorb_text	- Custom text to send to the player when the armor fully absorbs an attack.
+	e:soften_text	- Similar to absorb_text, custom text to send to the player when some damage is reduced.
 	Returns
-	0 - no block
-	1 - halfblock
-	2 - fullblock
+	A number between 0 and 100, with higher numbers resulting in less damage taken.
 */
-/mob/living/proc/run_armor_check(var/def_zone = null, var/attack_flag = "melee", var/absorb_text = null, var/soften_text = null)
+
+/mob/living/proc/run_armor_check(var/def_zone = null, var/attack_flag = "melee", var/armour_pen = 0, var/absorb_text = null, var/soften_text = null)
+	if(Debug2)
+		world.log << "## DEBUG: getarmor() was called."
+
+	if(armour_pen >= 100)
+		return 0 //might as well just skip the processing
+
 	var/armor = getarmor(def_zone, attack_flag)
-	var/absorb = 0
-	if(prob(armor))
-		absorb += 1
-	if(prob(armor))
-		absorb += 1
-	if(absorb >= 2)
-		if(absorb_text)
-			show_message("[absorb_text]")
-		else
-			show_message("\red Your armor absorbs the blow!")
-		return 2
-	if(absorb == 1)
-		if(absorb_text)
-			show_message("[soften_text]",4)
-		else
-			show_message("\red Your armor softens the blow!")
-		return 1
-	return 0
+	if(armor)
+		var/armor_variance_range = round(armor * 0.25) //Armor's effectiveness has a +25%/-25% variance.
+		var/armor_variance = rand(-armor_variance_range, armor_variance_range) //Get a random number between -25% and +25% of the armor's base value
+		if(Debug2)
+			world.log << "## DEBUG: The range of armor variance is [armor_variance_range].  The variance picked by RNG is [armor_variance]."
+
+		armor = min(armor + armor_variance, 100)	//Now we calcuate damage using the new armor percentage.
+		armor = max(armor - armour_pen, 0)			//Armor pen makes armor less effective.
+		if(armor >= 100)
+			if(absorb_text)
+				src << "<span class='danger'>[absorb_text]</span>"
+			else
+				src << "<span class='danger'>Your armor absorbs the blow!</span>"
+
+		else if(armor > 0)
+			if(soften_text)
+				src << "<span class='danger'>[soften_text]</span>"
+			else
+				src << "<span class='danger'>Your armor softens the blow!</span>"
+		if(Debug2)
+			world.log << "## DEBUG: Armor when [src] was attacked was [armor]."
+	return armor
 
 
 //if null is passed for def_zone, then this should return something appropriate for all zones (e.g. area effect damage)
@@ -64,7 +75,7 @@
 		return
 
 	//Armor
-	var/absorb = run_armor_check(def_zone, P.check_armour)
+	var/absorb = run_armor_check(def_zone, P.check_armour, P.armor_penetration)
 	var/proj_sharp = is_sharp(P)
 	var/proj_edge = has_edge(P)
 	if ((proj_sharp || proj_edge) && prob(getarmor(def_zone, P.check_armour)))
@@ -74,7 +85,13 @@
 	if(!P.nodamage)
 		apply_damage(P.damage, P.damage_type, def_zone, absorb, 0, P, sharp=proj_sharp, edge=proj_edge)
 	P.on_hit(src, absorb, def_zone)
-	return absorb
+
+	if(absorb == 100)
+		return 2
+	else if (absorb >= 0)
+		return 1
+	else
+		return 0
 
 //Handles the effects of "stun" weapons
 /mob/living/proc/stun_effect_act(var/stun_amount, var/agony_amount, var/def_zone, var/used_weapon=null)
@@ -119,8 +136,7 @@
 		src.visible_message("\red [src] has been hit by [O].")
 		var/armor = run_armor_check(null, "melee")
 
-		if(armor < 2)
-			apply_damage(throw_damage, dtype, null, armor, is_sharp(O), has_edge(O), O)
+		apply_damage(throw_damage, dtype, null, armor, is_sharp(O), has_edge(O), O)
 
 		O.throwing = 0		//it hit, so stop moving
 
@@ -251,7 +267,7 @@
 		return 0
 
 	//Scale quadratically so that single digit numbers of fire stacks don't burn ridiculously hot.
-	//lower limit of 700 K, same as matches and roughly the temperature of a cool flame. 
+	//lower limit of 700 K, same as matches and roughly the temperature of a cool flame.
 	return max(2.25*round(FIRESUIT_MAX_HEAT_PROTECTION_TEMPERATURE*(fire_stacks/FIRE_MAX_FIRESUIT_STACKS)**2), 700)
 
 /mob/living/proc/reagent_permeability()

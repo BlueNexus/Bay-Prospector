@@ -78,14 +78,13 @@
 	//armour
 	var/blocked = L.run_armor_check(target_zone, "melee")
 
-	if(blocked >= 2)
+	if(blocked >= 100)
 		return
 
 	if(!L.apply_damage(30, BRUTE, target_zone, blocked, used_weapon=src))
 		return 0
 
-	//trap the victim in place
-	if(!blocked)
+		//trap the victim in place
 		set_dir(L.dir)
 		can_buckle = 1
 		buckle_mob(L)
