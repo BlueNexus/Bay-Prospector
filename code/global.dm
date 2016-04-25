@@ -96,6 +96,8 @@ var/datum/debug/debugobj
 
 var/datum/moduletypes/mods = new()
 
+var/list/client/clientcidcheck = list()
+
 var/gravity_is_on = 1
 
 var/join_motd = null
