@@ -180,6 +180,8 @@
 		clientcidcheck[ckey] = null //reset so if they connect from another computer or a laptop or something later on, they don't get this message.
 		if(oldcid != computer_id)
 			src << "Your client is failing to report a stable computer id. Please remove wsock32.dll from c:/program files/byond/bin and reconnect."
+			world.log << "Attempted use of wsock32.dll by [ckey] detected."
+			message_admins("client '[ckey]' attempted to join while using wsock32.dll, and has been kicked.")
 			del(src)
 
 
